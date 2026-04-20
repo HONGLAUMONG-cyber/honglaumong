@@ -1,32 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Đang chuyển hướng...</title>
+    <title>Chuyển hướng Telegram</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: Arial, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; background-color: #f0f2f5; }
+        .btn { padding: 15px 30px; background-color: #0088cc; color: white; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 18px; box-shadow: 0 4px 15px rgba(0,136,204,0.3); }
+        .loader { border: 4px solid #f3f3f3; border-top: 4px solid #0088cc; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin-bottom: 20px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
 </head>
 <body>
-    <div style="text-align: center; margin-top: 50px; font-family: Arial;">
-        <h3>Đang kết nối tới Telegram...</h3>
-        <p>Nếu ứng dụng không tự mở, hãy <a href="https://t.me/+y_YIIePa7tw3NDM1">nhấn vào đây</a>.</p>
-    </div>
+    <div class="loader"></div>
+    <h3 style="color: #333;">Đang kết nối tới Telegram...</h3>
+    <p style="color: #666; margin-bottom: 30px;">Vui lòng đợi trong giây lát</p>
+    
+    <a href="tg://join?invite=y_YIIePa7tw3NDM1" class="btn">MỞ TELEGRAM NGAY</a>
 
     <script>
-    (function() {
-        // Link nhóm của bạn ở đây
-        var tgLink = "t.me/+y_YIIePa7tw3NDM1"; 
-        
-        // Lệnh mở ứng dụng Telegram trực tiếp
-        var protocolUrl = "tg://join?invite=" + tgLink.replace("t.me/+", "");
-        
-        // Thực hiện nhảy link
-        window.location.href = protocolUrl;
+        (function() {
+            var directUrl = "tg://join?invite=y_YIIePa7tw3NDM1";
+            var webUrl = "https://t.me/+y_YIIePa7tw3NDM1";
 
-        // Nếu sau 2 giây app không mở (có thể do chưa cài app), sẽ mở bằng trình duyệt web
-        setTimeout(function() {
-            window.location.href = "https://" + tgLink;
-        }, 2000);
-    })();
+            // Lệnh nhảy ngay lập tức
+            window.location.href = directUrl;
+
+            // Nếu sau 2.5 giây không thấy nhảy, hiện nút bấm và thử nhảy bằng link web
+            setTimeout(function() {
+                window.location.href = webUrl;
+            }, 2500);
+        })();
     </script>
 </body>
 </html>
