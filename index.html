@@ -1,95 +1,130 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <title>TRANG CHỦ HỒNG LÂU MỘNG</title>
+    <title>Hồng Lâu Mộng - Official</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        /* Giao diện nền nhã nhặn, tập trung vào nội dung chính */
+        /* Giao diện tối giản, sang trọng theo mẫu shoplinks */
         body { 
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
-            display: flex; flex-direction: column; align-items: center; justify-content: flex-start; 
-            min-height: 100vh; margin: 0; background-color: #f8f9fa; color: #333; padding: 20px; 
-            box-sizing: border-box; overflow-x: hidden;
+            background-color: #f0f2f5; 
+            display: flex; flex-direction: column; align-items: center; 
+            margin: 0; padding: 40px 20px; color: #1c1e21;
         }
-        .container { 
-            text-align: center; width: 100%; max-width: 400px; background: #ffffff; 
-            padding: 40px 20px; border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); 
-            margin-top: 80px; position: relative; border: 1px solid #eee;
+
+        /* Khung chứa chính */
+        .profile-card {
+            width: 100%; max-width: 400px; text-align: center;
+        }
+
+        /* Avatar chuẩn mẫu */
+        .avatar-container {
+            width: 96px; height: 96px; margin: 0 auto 16px auto;
+            border-radius: 50%; overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border: 2px solid #fff;
+        }
+        .avatar-container img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* Tiêu đề kèm tích xanh chuẩn Facebook/Insta */
+        .name-wrapper {
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 8px;
+        }
+        .name-wrapper h1 { 
+            font-size: 20px; font-weight: 700; margin: 0; 
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .verified-badge {
+            width: 20px; height: 20px; margin-left: 5px;
+            fill: #1DA1F2; /* Màu xanh xác minh chuẩn */
+        }
+
+        .bio { font-size: 14px; color: #65676b; margin-bottom: 32px; }
+
+        /* Nút bấm thiết kế theo style Linktree/Shoplinks */
+        .links-group { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+        
+        .link-item {
+            background: #ffffff;
+            color: #1c1e21;
+            text-decoration: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.2s ease;
+            border: 1px solid #e4e6eb;
+            display: flex; align-items: center; justify-content: center;
+            position: relative;
         }
         
-        /* Ảnh đại diện lấy từ file bạn cung cấp */
-        .avatar-wrapper {
-            width: 120px; height: 120px; margin: -90px auto 15px auto;
-            border-radius: 50%; border: 5px solid white; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            overflow: hidden; background-color: #eee;
+        /* Hiệu ứng nổi bật cho nút chính */
+        .link-item.featured {
+            background: #0088cc;
+            color: #ffffff;
+            border: none;
+            box-shadow: 0 4px 14px rgba(0,136,204,0.3);
         }
-        .avatar { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-        /* Tiêu đề in hoa có tích xanh xác minh */
-        .verified-title {
-            display: flex; align-items: center; justify-content: center; margin: 10px 0;
-        }
-        h2 { 
-            margin: 0; color: #333; font-size: 18px; font-weight: 700; 
-            text-transform: uppercase; letter-spacing: 0.5px; 
-        }
-        .badge-icon { width: 18px; height: 18px; margin-left: 5px; flex-shrink: 0; }
+        .link-item:hover { transform: scale(1.02); background: #f8f9fa; }
+        .link-item.featured:hover { background: #007bb5; }
 
-        /* Nút bấm nổi bật */
-        .btn { 
-            display: block; padding: 16px 20px; color: white; text-decoration: none; 
-            border-radius: 12px; font-weight: bold; font-size: 17px; margin-top: 20px;
-            background: #0088cc; /* Màu đặc trưng Telegram */
-            transition: 0.3s; box-shadow: 0 4px 12px rgba(0,136,204,0.3);
+        /* Box hướng dẫn nét đứt chuẩn mẫu bạn gửi ban đầu */
+        .instruction-box {
+            margin-top: 40px; padding: 20px;
+            border: 2px dashed #ffb6c1;
+            border-radius: 16px;
+            background: #fff;
+            text-align: left;
         }
-        .btn:hover { transform: translateY(-2px); opacity: 0.9; }
-        
-        /* Box hướng dẫn chuẩn mẫu bạn thích */
-        .guide-box { 
-            margin-top: 30px; padding: 15px; 
-            border: 2px dashed #ffb6c1; 
-            border-radius: 16px; 
-            background-color: #fff9fa; 
+        .instruction-box h3 { 
+            color: #d01d5a; font-size: 16px; margin: 0 0 12px 0; text-align: center;
         }
-        .guide-box h4 { color: #d01d5a; margin: 0 0 10px 0; font-size: 16px; }
-        .guide-box p { font-size: 14px; line-height: 1.5; margin: 8px 0; color: #555; text-align: left; }
+        .instruction-box p { font-size: 14px; margin: 8px 0; color: #4b4b4b; }
         .highlight { color: #d01d5a; font-weight: bold; }
+
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="avatar-wrapper">
-            <img src="https://i.ibb.co/TBvfCzZ6/H-nh-nh.jpg" alt="Avatar" class="avatar">
+    <div class="profile-card">
+        <div class="avatar-container">
+            <img src="https://i.ibb.co/TBvfCzZ6/H-nh-nh.jpg" alt="Hồng Lâu Mộng">
         </div>
 
-        <div class="verified-title">
-            <h2>TRANG CHỦ HỒNG LÂU MỘNG</h2>
-            <svg class="badge-icon" viewBox="0 0 512 512">
-                <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm113-281l-128 128c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47 111-111c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z" fill="#1DA1F2"/>
+        <div class="name-wrapper">
+            <h1>Trang Chủ Hồng Lâu Mộng</h1>
+            <svg class="verified-badge" viewBox="0 0 512 512">
+                <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm113-281l-128 128c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47 111-111c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/>
             </svg>
         </div>
         
-        <p style="color: #777; font-size: 13px;">Hệ thống đang kết nối an toàn...</p>
-        
-        <a href="tg://join?invite=y_YIIePa7tw3NDM1" class="btn">MỞ TRONG TELEGRAM</a>
+        <p class="bio">Hệ thống đang tự động kết nối tới Telegram...</p>
 
-        <div class="guide-box">
-            <h4>Nếu kết nối thất bại:</h4>
+        <div class="links-group">
+            <a href="tg://join?invite=y_YIIePa7tw3NDM1" class="link-item featured">VÀO NHÓM TELEGRAM NGAY</a>
+            
+            <a href="#" class="link-item">KÊNH DỰ PHÒNG</a>
+            <a href="#" class="link-item">LIÊN HỆ QUẢN TRỊ VIÊN</a>
+        </div>
+
+        <div class="instruction-box">
+            <h3>Nếu kết nối thất bại:</h3>
             <p>1. Nhấn vào biểu tượng <span class="highlight">Dấu 3 Chấm (...)</span></p>
-            <p>2. Chọn <span class="highlight">"Mở bằng trình duyệt"</span></p>
+            <p>2. Chọn <span class="highlight">"Mở bằng trình duyệt"</span> để tự động vào nhóm.</p>
         </div>
     </div>
 
     <script>
-        /* TỰ ĐỘNG MỞ TELEGRAM NGAY LẬP TỨC */
+        /* Tự động nhảy link sau 1.5 giây */
         window.onload = function() {
             setTimeout(function() {
                 window.location.href = "tg://join?invite=y_YIIePa7tw3NDM1";
-            }, 1200); // Sau 1.2 giây sẽ tự động kích hoạt
-        };
+            }, 1500);
+        }
     </script>
 </body>
 </html>
