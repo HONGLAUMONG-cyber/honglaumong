@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Đang chuyển hướng...</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div style="text-align: center; margin-top: 50px; font-family: Arial;">
+        <h3>Đang kết nối tới Telegram...</h3>
+        <p>Nếu ứng dụng không tự mở, hãy <a href="https://t.me/+y_YIIePa7tw3NDM1">nhấn vào đây</a>.</p>
+    </div>
+
+    <script>
+    (function() {
+        // Link nhóm của bạn ở đây
+        var tgLink = "t.me/+y_YIIePa7tw3NDM1"; 
+        
+        // Lệnh mở ứng dụng Telegram trực tiếp
+        var protocolUrl = "tg://join?invite=" + tgLink.replace("t.me/+", "");
+        
+        // Thực hiện nhảy link
+        window.location.href = protocolUrl;
+
+        // Nếu sau 2 giây app không mở (có thể do chưa cài app), sẽ mở bằng trình duyệt web
+        setTimeout(function() {
+            window.location.href = "https://" + tgLink;
+        }, 2000);
+    })();
+    </script>
+</body>
+</html>
