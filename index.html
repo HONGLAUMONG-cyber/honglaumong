@@ -1,36 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Chuyển hướng Telegram</title>
+    <title>Kết nối Telegram</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body { font-family: Arial, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; background-color: #f0f2f5; }
-        .btn { padding: 15px 30px; background-color: #0088cc; color: white; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 18px; box-shadow: 0 4px 15px rgba(0,136,204,0.3); }
-        .loader { border: 4px solid #f3f3f3; border-top: 4px solid #0088cc; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin-bottom: 20px; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; background-color: #f5f7fa; }
+        .container { text-align: center; padding: 20px; background: white; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 85%; }
+        .btn { display: inline-block; padding: 16px 32px; background-color: #0088cc; color: white; text-decoration: none; border-radius: 12px; font-weight: bold; font-size: 18px; margin-top: 20px; transition: 0.3s; }
+        .btn:active { transform: scale(0.95); }
+        h3 { color: #333; margin-bottom: 10px; }
+        p { color: #666; font-size: 14px; line-height: 1.5; }
     </style>
 </head>
 <body>
-    <div class="loader"></div>
-    <h3 style="color: #333;">Đang kết nối tới Telegram...</h3>
-    <p style="color: #666; margin-bottom: 30px;">Vui lòng đợi trong giây lát</p>
-    
-    <a href="tg://join?invite=y_YIIePa7tw3NDM1" class="btn">MỞ TELEGRAM NGAY</a>
+    <div class="container">
+        <h3>Hồng Lâu Mộng</h3>
+        <p>Để tham gia nhóm, vui lòng nhấn vào nút bên dưới để mở ứng dụng Telegram.</p>
+        
+        <a href="tg://join?invite=y_YIIePa7tw3NDM1" class="btn">MỞ TRONG TELEGRAM</a>
+        
+        <p style="margin-top: 20px; font-size: 12px;">Nếu không mở được, hãy nhấn vào <a href="https://t.me/+y_YIIePa7tw3NDM1">liên kết này</a>.</p>
+    </div>
 
     <script>
-        (function() {
-            var directUrl = "tg://join?invite=y_YIIePa7tw3NDM1";
-            var webUrl = "https://t.me/+y_YIIePa7tw3NDM1";
-
-            // Lệnh nhảy ngay lập tức
-            window.location.href = directUrl;
-
-            // Nếu sau 2.5 giây không thấy nhảy, hiện nút bấm và thử nhảy bằng link web
-            setTimeout(function() {
-                window.location.href = webUrl;
-            }, 2500);
-        })();
+        // Cố gắng tự động nhảy một lần
+        setTimeout(function() {
+            window.location.href = "tg://join?invite=y_YIIePa7tw3NDM1";
+        }, 500);
     </script>
 </body>
 </html>
