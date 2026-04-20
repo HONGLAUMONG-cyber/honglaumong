@@ -5,29 +5,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; background-color: #f5f7fa; }
-        .container { text-align: center; padding: 20px; background: white; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 85%; }
-        .btn { display: inline-block; padding: 16px 32px; background-color: #0088cc; color: white; text-decoration: none; border-radius: 12px; font-weight: bold; font-size: 18px; margin-top: 20px; transition: 0.3s; }
-        .btn:active { transform: scale(0.95); }
-        h3 { color: #333; margin-bottom: 10px; }
-        p { color: #666; font-size: 14px; line-height: 1.5; }
+        body { font-family: -apple-system, system-ui, sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; background-color: #f0f2f5; }
+        .card { text-align: center; padding: 30px; background: white; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 80%; max-width: 400px; }
+        .btn { display: block; padding: 18px; background-color: #24A1DE; color: white; text-decoration: none; border-radius: 15px; font-weight: bold; font-size: 20px; margin-top: 20px; }
+        h2 { color: #222; margin: 0 0 10px 0; }
+        p { color: #666; font-size: 15px; line-height: 1.4; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h3>Hồng Lâu Mộng</h3>
-        <p>Để tham gia nhóm, vui lòng nhấn vào nút bên dưới để mở ứng dụng Telegram.</p>
+    <div class="card">
+        <h2>Hồng Lâu Mộng</h2>
+        <p>Nếu không tự động chuyển hướng, vui lòng nhấn nút bên dưới:</p>
         
-        <a href="tg://join?invite=y_YIIePa7tw3NDM1" class="btn">MỞ TRONG TELEGRAM</a>
+        <a href="https://t.me/+y_YIIePa7tw3NDM1" class="btn">VÀO NHÓM NGAY</a>
         
-        <p style="margin-top: 20px; font-size: 12px;">Nếu không mở được, hãy nhấn vào <a href="https://t.me/+y_YIIePa7tw3NDM1">liên kết này</a>.</p>
+        <p style="margin-top: 15px; font-size: 12px; color: #999;">Gợi ý: Nếu vẫn lỗi, hãy chọn "Mở bằng trình duyệt hệ thống" ở dấu 3 chấm góc trên.</p>
     </div>
 
     <script>
-        // Cố gắng tự động nhảy một lần
+        // Tự động nhảy bằng link web thay vì link app để tránh bị trình duyệt chặn
         setTimeout(function() {
-            window.location.href = "tg://join?invite=y_YIIePa7tw3NDM1";
-        }, 500);
+            window.location.href = "https://t.me/+y_YIIePa7tw3NDM1";
+        }, 1000);
     </script>
 </body>
 </html>
