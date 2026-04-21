@@ -8,115 +8,103 @@
         /* --- GIAO DIỆN TỐI SANG TRỌNG --- */
         body { 
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
-            background-color: #0f0f0f; 
+            background-color: #080808; 
             display: flex; flex-direction: column; align-items: center; justify-content: flex-start; 
             min-height: 100vh; margin: 0; padding: 40px 20px; color: #ffffff; 
-            box-sizing: border-box; overflow-x: hidden; position: relative; 
+            box-sizing: border-box; overflow: hidden; position: relative; 
         }
 
-        /* Khung chứa chính */
         .profile-card {
-            width: 100%; max-width: 400px; text-align: center;
-            background: rgba(25, 25, 25, 0.9); 
-            padding: 40px 25px; border-radius: 28px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            width: 100%; max-width: 380px; text-align: center;
+            background: rgba(20, 20, 20, 0.8); 
+            padding: 40px 25px; border-radius: 30px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
             position: relative; z-index: 10;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
         }
 
-        /* Avatar */
         .avatar-container {
-            width: 110px; height: 110px; margin: 0 auto 15px auto;
+            width: 115px; height: 115px; margin: 0 auto 20px auto;
             border-radius: 50%; overflow: hidden;
-            border: 4px solid #fff; 
-            box-shadow: 0 8px 25px rgba(208, 29, 90, 0.4);
+            border: 3px solid rgba(255, 255, 255, 0.8); 
+            box-shadow: 0 0 25px rgba(208, 29, 90, 0.6);
         }
         .avatar-container img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* Tiêu đề & Tích xanh */
         .name-wrapper {
-            display: flex; align-items: center; justify-content: center; margin-bottom: 5px;
+            display: flex; align-items: center; justify-content: center; margin-bottom: 8px;
         }
         .name-wrapper h1 { 
-            font-size: 20px; font-weight: 800; margin: 0; 
-            text-transform: uppercase; letter-spacing: 0.5px;
+            font-size: 22px; font-weight: 900; margin: 0; 
+            background: linear-gradient(to right, #fff, #ffb6c1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
         }
-        .verified-badge {
-            width: 22px; height: 22px; margin-left: 6px;
-            fill: #1DA1F2;
-        }
+        .verified-badge { width: 20px; height: 20px; margin-left: 8px; fill: #1DA1F2; }
 
-        .bio { font-size: 13px; color: #888; margin-bottom: 25px; }
+        .bio { font-size: 14px; color: #aaa; margin-bottom: 30px; font-style: italic; }
 
-        /* Nhóm nút bấm */
-        .links-group { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+        .links-group { display: flex; flex-direction: column; gap: 15px; width: 100%; }
         
         .link-item {
-            text-decoration: none;
-            padding: 18px;
-            border-radius: 16px;
-            font-weight: 700;
-            font-size: 16px;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Hiệu ứng nổi mượt hơn */
+            text-decoration: none; padding: 16px; border-radius: 18px;
+            font-weight: 700; font-size: 15px;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             display: flex; align-items: center; justify-content: center;
-            color: #fff;
-            /* CẢ 3 NÚT ĐỀU RUNG TỰ ĐỘNG */
-            animation: gentleShake 3.5s infinite;
+            color: #fff; animation: gentleShake 3.5s infinite;
         }
         
-        /* Nút VÀO NHÓM (Hồng - Gradient) */
+        /* Nút 1: VÀO NHÓM (Hồng) */
         .btn-main {
             background: linear-gradient(135deg, #ff69b4, #d01d5a);
-            box-shadow: 0 6px 20px rgba(208, 29, 90, 0.4);
+            box-shadow: 0 8px 20px rgba(208, 29, 90, 0.4);
         }
 
-        /* Nút KÊNH DỰ PHÒNG (Vàng) */
+        /* Nút 2: DỰ PHÒNG (Vàng) */
         .btn-yellow {
-            background: #f1c40f;
-            color: #000;
-            box-shadow: 0 6px 15px rgba(241, 196, 15, 0.3);
-            animation-delay: 0.2s; /* Lệch nhịp rung cho đẹp */
+            background: #f39c12; color: #fff;
+            box-shadow: 0 8px 15px rgba(243, 156, 18, 0.3);
+            animation-delay: 0.2s;
         }
 
-        /* Nút LIÊN HỆ ADMIN (Đỏ) */
+        /* Nút 3: ADMIN (Đỏ) */
         .btn-red {
-            background: #e74c3c;
-            box-shadow: 0 6px 15px rgba(231, 76, 60, 0.3);
-            animation-delay: 0.4s; /* Lệch nhịp rung cho đẹp */
+            background: #c0392b;
+            box-shadow: 0 8px 15px rgba(192, 57, 43, 0.3);
+            animation-delay: 0.4s;
         }
 
-        /* HIỆU ỨNG ĐƯA CHUỘT VÀO THÌ NỔI LÊN */
         .link-item:hover { 
-            transform: translateY(-8px) scale(1.05); /* Nổi lên rõ rệt */
+            transform: translateY(-5px) scale(1.02);
             filter: brightness(1.2); 
-            box-shadow: 0 12px 25px rgba(255, 255, 255, 0.2);
-            animation-play-state: paused; /* Tạm dừng rung khi đang di chuột vào */
+            animation-play-state: paused;
         }
 
         @keyframes gentleShake {
-            0%, 75%, 100% { transform: rotate(0deg); }
-            77%, 81%, 85%, 89%, 93%, 97% { transform: rotate(-2deg); }
-            79%, 83%, 87%, 91%, 95%, 99% { transform: rotate(2deg); }
+            0%, 70%, 100% { transform: rotate(0deg); }
+            72%, 76%, 80%, 84%, 88%, 92%, 96% { transform: rotate(-1.5deg); }
+            74%, 78%, 82%, 86%, 90%, 94%, 98% { transform: rotate(1.5deg); }
         }
 
-        /* Box hướng dẫn chuẩn */
         .guide-box { 
-            margin-top: 35px; padding: 20px; 
-            border: 2px dashed #ffb6c1;
-            border-radius: 20px; 
-            background-color: #fff; 
-            text-align: left;
+            margin-top: 30px; padding: 18px; 
+            border: 1px dashed rgba(255, 182, 193, 0.5);
+            border-radius: 20px; background: rgba(255, 255, 255, 0.05); text-align: left;
         }
-        .guide-box h4 { color: #d01d5a; margin: 0 0 10px 0; font-size: 17px; text-align: center; }
-        .guide-box p { font-size: 14px; line-height: 1.6; margin: 8px 0; color: #333; }
-        .highlight { color: #d01d5a; font-weight: bold; }
+        .guide-box h4 { color: #ff69b4; margin: 0 0 10px 0; font-size: 16px; text-align: center; text-transform: uppercase; }
+        .guide-box p { font-size: 13px; line-height: 1.6; margin: 6px 0; color: #ccc; }
+        .highlight { color: #ff69b4; font-weight: bold; }
 
-        /* --- HIỆU ỨNG HOA ĐÀO --- */
-        .cherry-blossom { position: absolute; background-color: #ffb6c1; border-radius: 50%; opacity: 0.8; pointer-events: none; animation: fall linear infinite; z-index: 1; }
+        .cherry-blossom { 
+            position: absolute; background-color: #ffb6c1; border-radius: 50% 0 50% 50%; 
+            opacity: 0.6; pointer-events: none; animation: fall linear infinite; z-index: 1; 
+        }
         @keyframes fall {
-            0% { transform: translateY(-100px) rotate(0deg); }
-            100% { transform: translateY(100vh) rotate(360deg); }
+            0% { transform: translateY(-50px) translateX(0) rotate(0deg); opacity: 0.8; }
+            50% { transform: translateY(50vh) translateX(50px) rotate(180deg); opacity: 0.6; }
+            100% { transform: translateY(105vh) translateX(-20px) rotate(360deg); opacity: 0; }
         }
     </style>
 </head>
@@ -124,7 +112,7 @@
 
     <div class="profile-card">
         <div class="avatar-container">
-            <img src="https://i.ibb.co/TBvfCzZ6/H-nh-nh.jpg" alt="Avatar">
+            <img src="https://i.ibb.co/TBvfCzZ6/H-nh-nh.jpg" alt="Hồng Lâu Mộng">
         </div>
 
         <div class="name-wrapper">
@@ -137,41 +125,37 @@
         <p class="bio">Hệ thống đang tự động kết nối...</p>
 
         <div class="links-group">
-            <a href="tg://join?invite=y_YIIePa7tw3NDM1" class="link-item btn-main">VÀO NHÓM TELEGRAM NGAY</a>
-            
-            <a href="https://t.me/+4VFPp2IZHyM5Nzc1" class="link-item btn-yellow">KÊNH DỰ PHÒNG</a>
-            
+            <a href="https://t.me/Tramgiaitri" class="link-item btn-main">VÀO NHÓM TELEGRAM NGAY</a>
+            <a href="https://t.me/+UdgDXaHXRmY2Y2I1" class="link-item btn-yellow">KÊNH DỰ PHÒNG</a>
             <a href="https://t.me/Beshanday" class="link-item btn-red">LIÊN HỆ QUẢN TRỊ VIÊN</a>
         </div>
 
         <div class="guide-box">
-            <h4>Nếu kết nối thất bại:</h4>
-            <p>1. Nhấn vào biểu tượng <span class="highlight">Dấu 3 Chấm (...)</span></p>
-            <p>2. Chọn <span class="highlight">"Mở bằng trình duyệt"</span></p>
+            <h4>Nếu không vào được:</h4>
+            <p>1. Nhấn vào <span class="highlight">Dấu 3 Chấm (...)</span> góc trên.</p>
+            <p>2. Chọn <span class="highlight">"Mở bằng trình duyệt"</span> (Safari/Chrome).</p>
         </div>
     </div>
 
     <script>
-        /* Tự động nhảy link sau 1.5 giây */
         window.onload = function() {
             setTimeout(function() {
-                window.location.href = "tg://join?invite=y_YIIePa7tw3NDM1";
-            }, 1500);
+                window.location.href = "https://t.me/Tramgiaitri";
+            }, 2000);
         }
 
-        /* Hiệu ứng hoa đào */
         function createBlossom() {
-            if (document.querySelectorAll('.cherry-blossom').length > 15) return;
+            if (document.querySelectorAll('.cherry-blossom').length > 20) return;
             const blossom = document.createElement('div');
             blossom.className = 'cherry-blossom';
-            const size = Math.random() * 7 + 4 + 'px';
+            const size = Math.random() * 8 + 5 + 'px';
             blossom.style.width = size; blossom.style.height = size;
             blossom.style.left = Math.random() * 100 + 'vw';
-            blossom.style.animationDuration = Math.random() * 3 + 4 + 's'; 
+            blossom.style.animationDuration = Math.random() * 4 + 4 + 's'; 
             document.body.appendChild(blossom);
-            setTimeout(() => { blossom.remove(); }, 6000);
+            setTimeout(() => { blossom.remove(); }, 8000);
         }
-        setInterval(createBlossom, 600);
+        setInterval(createBlossom, 500);
     </script>
 </body>
 </html>
