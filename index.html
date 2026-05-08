@@ -201,18 +201,47 @@
 
     <script>
         window.onload = function() {
-            // Kiểm tra khách đến từ Anonlink hoặc có gắn token của Bot trên link không
             const referrer = document.referrer.toLowerCase();
             const urlParams = new URLSearchParams(window.location.search);
-            const isFromMission = referrer.includes('anonlink.io') || urlParams.has('v');
+            const token = urlParams.get('v');
+
+            // --- BẪY 1: Phát hiện khách tải lại trang (F5 / Reload) ---
+            let isReload = false;
+            if (window.performance) {
+                const navEntries = window.performance.getEntriesByType("navigation");
+                if (navEntries.length > 0 && navEntries[0].type === "reload") {
+                    isReload = true;
+                } else if (window.performance.navigation && window.performance.navigation.type === 1) {
+                    isReload = true;
+                }
+            }
+
+            // --- BẪY 2: Phát hiện khách dùng lại Link Token cũ ---
+            let isTokenUsed = false;
+            if (token) {
+                // Kiểm tra xem Token này đã từng được lưu vào khay nhớ tạm của trình duyệt chưa
+                if (sessionStorage.getItem('used_token_' + token)) {
+                    isTokenUsed = true;
+                } else {
+                    // Nếu chưa, lưu lại ngay để khóa các lần mở/tải lại sau
+                    sessionStorage.setItem('used_token_' + token, 'true');
+                }
+            }
+
+            // Khách HỢP LỆ khi: Không tải lại trang + Không dùng link cũ + Có Token (hoặc từ Anonlink)
+            const isFromMission = !isReload && !isTokenUsed && (referrer.includes('anonlink.io') || token);
 
             if (isFromMission) {
-                // HỦY bỏ code tự động nhảy trang, hiển thị bảng hướng dẫn và vùng lấy mã
+                // HỢP LỆ -> Hiển thị bảng hướng dẫn và vùng lấy mã
                 document.getElementById('otp-instruction').style.display = 'block';
                 document.getElementById('otp-container').style.display = 'block';
                 document.querySelector('.bio').innerText = "Vui lòng lấy mã xác nhận ở bên dưới!";
             } else {
-                // NẾU LÀ KHÁCH BÌNH THƯỜNG -> CHẠY CODE CŨ -> Tự động chuyển hướng sau 2s
+                // GIAN LẬN (Hoặc Khách Bình Thường) -> Cảnh báo rồi đá về Telegram sau 2s
+                if (isReload || isTokenUsed) {
+                    document.querySelector('.bio').innerText = "🚫 Liên kết hết hạn do tải lại trang! Đang chuyển hướng...";
+                    document.querySelector('.bio').style.color = "#ff4d4d"; // Đổi màu đỏ cho sợ
+                }
                 setTimeout(function() {
                     window.location.href = "https://t.me/Tramgiaitri";
                 }, 2000);
