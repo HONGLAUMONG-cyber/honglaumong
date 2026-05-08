@@ -11,7 +11,7 @@
             background-color: #080808; 
             display: flex; flex-direction: column; align-items: center; justify-content: flex-start; 
             min-height: 100vh; margin: 0; padding: 40px 20px; color: #ffffff; 
-            box-sizing: border-box; overflow: hidden; position: relative; 
+            box-sizing: border-box; overflow-x: hidden; position: relative; 
         }
 
         .profile-card {
@@ -106,9 +106,43 @@
             50% { transform: translateY(50vh) translateX(50px) rotate(180deg); opacity: 0.6; }
             100% { transform: translateY(105vh) translateX(-20px) rotate(360deg); opacity: 0; }
         }
+
+        /* --- PHẦN CSS THÊM CHO NHIỆM VỤ OTP --- */
+        .otp-instruction {
+            background: linear-gradient(135deg, #ff69b4, #d01d5a);
+            color: #fff; padding: 12px 20px; border-radius: 15px;
+            font-weight: bold; margin-bottom: 25px; font-size: 15px;
+            text-align: center; animation: gentleShake 3s infinite;
+            box-shadow: 0 5px 15px rgba(208, 29, 90, 0.5); z-index: 20;
+            width: 100%; max-width: 380px; border: 1px solid rgba(255,255,255,0.2);
+        }
+        .otp-container {
+            margin-top: 30px; padding: 25px; background: rgba(20, 20, 20, 0.85);
+            border: 1px solid #ff69b4; border-radius: 20px; text-align: center;
+            width: 100%; max-width: 380px; z-index: 10; backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.3);
+        }
+        .btn-get-otp {
+            background: linear-gradient(135deg, #28a745, #218838);
+            color: white; padding: 15px 20px; border: none; border-radius: 12px;
+            font-weight: 900; font-size: 16px; cursor: pointer; width: 100%;
+            transition: all 0.3s ease; box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+            text-transform: uppercase;
+        }
+        .btn-get-otp:hover { transform: translateY(-3px) scale(1.02); filter: brightness(1.1); }
+        .otp-result {
+            font-size: 36px; font-weight: 900; color: #ffea00; display: none;
+            letter-spacing: 3px; text-shadow: 0 0 15px rgba(255, 234, 0, 0.6);
+            margin-bottom: 5px;
+        }
+        .otp-countdown { font-size: 13px; color: #ccc; display: none; font-style: italic; }
     </style>
 </head>
 <body>
+
+    <div id="otp-instruction" class="otp-instruction" style="display: none;">
+        🎉 XÁC MINH THÀNH CÔNG!<br>👇 Kéo xuống cuối trang để lấy Mã OTP 👇
+    </div>
 
     <div class="profile-card">
         <div class="avatar-container">
@@ -137,13 +171,59 @@
         </div>
     </div>
 
+    <div id="otp-container" class="otp-container" style="display: none;">
+        <button id="btn-get-otp" class="btn-get-otp" onclick="showOTP()">🔐 BẤM VÀO ĐÂY ĐỂ LẤY MÃ OTP</button>
+        <div id="otp-result" class="otp-result"></div>
+        <div id="otp-countdown" class="otp-countdown"></div>
+    </div>
+
     <script>
         window.onload = function() {
-            setTimeout(function() {
-                window.location.href = "https://t.me/Tramgiaitri";
-            }, 2000);
+            // Kiểm tra khách đến từ Anonlink hoặc có gắn token của Bot trên link không
+            const referrer = document.referrer.toLowerCase();
+            const urlParams = new URLSearchParams(window.location.search);
+            const isFromMission = referrer.includes('anonlink.io') || urlParams.has('v');
+
+            if (isFromMission) {
+                // HỦY bỏ code tự động nhảy trang, hiển thị bảng hướng dẫn và vùng lấy mã
+                document.getElementById('otp-instruction').style.display = 'block';
+                document.getElementById('otp-container').style.display = 'block';
+                document.querySelector('.bio').innerText = "Vui lòng lấy mã xác nhận ở bên dưới!";
+            } else {
+                // NẾU LÀ KHÁCH BÌNH THƯỜNG -> CHẠY CODE CŨ -> Tự động chuyển hướng sau 2s
+                setTimeout(function() {
+                    window.location.href = "https://t.me/Tramgiaitri";
+                }, 2000);
+            }
         }
 
+        // HÀM TÍNH TOÁN OTP THEO THUẬT TOÁN CỦA BOT
+        function generateOTP() {
+            const currentMinute = Math.floor(Date.now() / 60000); // Lấy số phút hiện tại
+            let code = ((currentMinute + 88) * 168) % 10000;      // Áp dụng công thức bí mật
+            return "M" + code.toString().padStart(4, '0');        // Thêm chữ M và đủ 4 số
+        }
+
+        // HÀM HIỆN MÃ KHI BẤM NÚT
+        function showOTP() {
+            document.getElementById("btn-get-otp").style.display = "none";
+            document.getElementById("otp-result").style.display = "block";
+            document.getElementById("otp-countdown").style.display = "block";
+            
+            function updateOTPDisplay() {
+                document.getElementById("otp-result").innerText = generateOTP();
+                let secondsLeft = 60 - new Date().getSeconds();
+                document.getElementById("otp-countdown").innerText = "(Mã sẽ tự động làm mới sau: " + secondsLeft + "s)";
+            }
+            
+            updateOTPDisplay(); // Gọi ngay lần đầu
+            setInterval(updateOTPDisplay, 1000); // Cập nhật mỗi giây
+            
+            // Tự động cuộn trang xuống cuối để khách thấy mã
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+
+        // CODE CŨ: Hiệu ứng hoa rơi
         function createBlossom() {
             if (document.querySelectorAll('.cherry-blossom').length > 20) return;
             const blossom = document.createElement('div');
