@@ -130,12 +130,29 @@
             text-transform: uppercase;
         }
         .btn-get-otp:hover { transform: translateY(-3px) scale(1.02); filter: brightness(1.1); }
-        .otp-result {
-            font-size: 36px; font-weight: 900; color: #ffea00; display: none;
-            letter-spacing: 3px; text-shadow: 0 0 15px rgba(255, 234, 0, 0.6);
-            margin-bottom: 5px;
+        
+        /* Bố cục hàng ngang cho Mã OTP và Nút Copy */
+        .otp-display-wrapper {
+            display: none; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 12px; 
+            margin: 15px 0 10px 0;
         }
-        .otp-countdown { font-size: 13px; color: #ccc; display: none; font-style: italic; }
+        .otp-result {
+            font-size: 34px; font-weight: 900; color: #ffea00; margin: 0;
+            letter-spacing: 3px; text-shadow: 0 0 15px rgba(255, 234, 0, 0.6);
+        }
+        .btn-copy {
+            background: rgba(255, 255, 255, 0.1); color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 8px 12px; border-radius: 8px; font-size: 14px; font-weight: bold;
+            cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 5px;
+        }
+        .btn-copy:hover { background: rgba(255, 255, 255, 0.2); transform: scale(1.05); }
+        .btn-copy:active { transform: scale(0.95); }
+
+        .otp-countdown { font-size: 13px; color: #ccc; display: none; font-style: italic; margin-top: 8px; }
     </style>
 </head>
 <body>
@@ -173,7 +190,12 @@
 
     <div id="otp-container" class="otp-container" style="display: none;">
         <button id="btn-get-otp" class="btn-get-otp" onclick="showOTP()">🔐 BẤM VÀO ĐÂY ĐỂ LẤY MÃ OTP</button>
-        <div id="otp-result" class="otp-result"></div>
+        
+        <div id="otp-display-wrapper" class="otp-display-wrapper">
+            <div id="otp-result" class="otp-result"></div>
+            <button id="btn-copy" class="btn-copy" onclick="copyOTP()">📋 Copy</button>
+        </div>
+        
         <div id="otp-countdown" class="otp-countdown"></div>
     </div>
 
@@ -204,23 +226,42 @@
             return "M" + code.toString().padStart(4, '0');        // Thêm chữ M và đủ 4 số
         }
 
-        // HÀM HIỆN MÃ KHI BẤM NÚT
+        // HÀM HIỆN MÃ KHI BẤM NÚT (ĐÃ FIX: CHỈ HIỆN 1 LẦN, KHÔNG TỰ ĐỘNG LÀM MỚI)
         function showOTP() {
             document.getElementById("btn-get-otp").style.display = "none";
-            document.getElementById("otp-result").style.display = "block";
+            document.getElementById("otp-display-wrapper").style.display = "flex"; // Hiển thị cả mã và nút copy
             document.getElementById("otp-countdown").style.display = "block";
             
-            function updateOTPDisplay() {
-                document.getElementById("otp-result").innerText = generateOTP();
-                let secondsLeft = 60 - new Date().getSeconds();
-                document.getElementById("otp-countdown").innerText = "(Mã sẽ tự động làm mới sau: " + secondsLeft + "s)";
-            }
+            // Lấy mã 1 lần duy nhất và ghim luôn trên màn hình
+            document.getElementById("otp-result").innerText = generateOTP();
             
-            updateOTPDisplay(); // Gọi ngay lần đầu
-            setInterval(updateOTPDisplay, 1000); // Cập nhật mỗi giây
+            // Cảnh báo khách hàng
+            document.getElementById("otp-countdown").innerText = "⚠️ Mã này chỉ có hiệu lực trong 1-2 phút. Vui lòng quay lại Bot và nhập ngay lập tức!";
             
             // Tự động cuộn trang xuống cuối để khách thấy mã
             window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+
+        // HÀM SAO CHÉP MÃ OTP VÀO KHAY NHỚ TẠM
+        function copyOTP() {
+            const otpText = document.getElementById("otp-result").innerText;
+            if(!otpText) return;
+            
+            navigator.clipboard.writeText(otpText).then(() => {
+                const copyBtn = document.getElementById("btn-copy");
+                copyBtn.innerHTML = "✅ Đã chép";
+                copyBtn.style.background = "rgba(40, 167, 69, 0.5)"; // Đổi nút sang màu xanh rêu
+                copyBtn.style.borderColor = "#28a745";
+                
+                // Trả lại trạng thái cũ sau 2 giây
+                setTimeout(() => {
+                    copyBtn.innerHTML = "📋 Copy";
+                    copyBtn.style.background = "rgba(255, 255, 255, 0.1)";
+                    copyBtn.style.borderColor = "rgba(255, 255, 255, 0.3)";
+                }, 2000);
+            }).catch(err => {
+                alert("Trình duyệt không hỗ trợ sao chép tự động. Vui lòng copy thủ công!");
+            });
         }
 
         // CODE CŨ: Hiệu ứng hoa rơi
@@ -238,4 +279,4 @@
         setInterval(createBlossom, 500);
     </script>
 </body>
-</html> 
+</html>
