@@ -173,7 +173,7 @@
             </svg>
         </div>
         
-        <p class="bio">Hệ thống đang tự động kết nối...</p>
+        <p class="bio" id="bio-text">Hệ thống đang tự động kết nối...</p>
 
         <div class="links-group">
             <a href="https://t.me/Tramgiaitri" class="link-item btn-main">VÀO NHÓM TELEGRAM NGAY</a>
@@ -201,47 +201,37 @@
 
     <script>
         window.onload = function() {
+            // Kiểm tra khách đến từ Anonlink hoặc có gắn token của Bot trên link không
             const referrer = document.referrer.toLowerCase();
             const urlParams = new URLSearchParams(window.location.search);
             const token = urlParams.get('v');
-
-            // --- BẪY 1: Phát hiện khách tải lại trang (F5 / Reload) ---
-            let isReload = false;
-            if (window.performance) {
-                const navEntries = window.performance.getEntriesByType("navigation");
-                if (navEntries.length > 0 && navEntries[0].type === "reload") {
-                    isReload = true;
-                } else if (window.performance.navigation && window.performance.navigation.type === 1) {
-                    isReload = true;
-                }
-            }
-
-            // --- BẪY 2: Phát hiện khách dùng lại Link Token cũ ---
+            
+            // --- THUẬT TOÁN KHÓA TOKEN 1 LẦN DÙNG LOCALSTORAGE ---
             let isTokenUsed = false;
             if (token) {
-                // Kiểm tra xem Token này đã từng được lưu vào khay nhớ tạm của trình duyệt chưa
-                if (sessionStorage.getItem('used_token_' + token)) {
-                    isTokenUsed = true;
+                if (localStorage.getItem('used_token_' + token)) {
+                    isTokenUsed = true; // Token đã bị xài
                 } else {
-                    // Nếu chưa, lưu lại ngay để khóa các lần mở/tải lại sau
-                    sessionStorage.setItem('used_token_' + token, 'true');
+                    localStorage.setItem('used_token_' + token, 'true'); // Lưu dấu vết là đã xài
                 }
             }
 
-            // Khách HỢP LỆ khi: Không tải lại trang + Không dùng link cũ + Có Token (hoặc từ Anonlink)
-            const isFromMission = !isReload && !isTokenUsed && (referrer.includes('anonlink.io') || token);
+            // Hợp lệ nếu có token mới (chưa bị xài) HOẶC từ anonlink
+            const isFromMission = (referrer.includes('anonlink.io') || token) && !isTokenUsed;
 
             if (isFromMission) {
-                // HỢP LỆ -> Hiển thị bảng hướng dẫn và vùng lấy mã
+                // HỦY bỏ code tự động nhảy trang, hiển thị bảng hướng dẫn và vùng lấy mã
                 document.getElementById('otp-instruction').style.display = 'block';
                 document.getElementById('otp-container').style.display = 'block';
-                document.querySelector('.bio').innerText = "Vui lòng lấy mã xác nhận ở bên dưới!";
+                document.getElementById('bio-text').innerText = "Vui lòng lấy mã xác nhận ở bên dưới!";
             } else {
-                // GIAN LẬN (Hoặc Khách Bình Thường) -> Cảnh báo rồi đá về Telegram sau 2s
-                if (isReload || isTokenUsed) {
-                    document.querySelector('.bio').innerText = "🚫 Liên kết hết hạn do tải lại trang! Đang chuyển hướng...";
-                    document.querySelector('.bio').style.color = "#ff4d4d"; // Đổi màu đỏ cho sợ
+                // Báo lỗi đỏ chót nếu khách cố tình tải lại trang hoặc xài token cũ
+                if (isTokenUsed) {
+                    document.getElementById('bio-text').innerText = "🚫 Link đã hết hạn (chỉ dùng 1 lần)! Đang chuyển hướng...";
+                    document.getElementById('bio-text').style.color = "#ff4d4d";
                 }
+                
+                // NẾU LÀ KHÁCH BÌNH THƯỜNG HOẶC GIAN LẬN -> Tự động chuyển hướng sau 2s
                 setTimeout(function() {
                     window.location.href = "https://t.me/Tramgiaitri";
                 }, 2000);
