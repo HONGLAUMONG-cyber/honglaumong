@@ -240,9 +240,14 @@
 
         // HÀM TÍNH TOÁN OTP THEO THUẬT TOÁN CỦA BOT
         function generateOTP() {
-            const currentMinute = Math.floor(Date.now() / 60000); // Lấy số phút hiện tại
-            let code = ((currentMinute + 88) * 168) % 10000;      // Áp dụng công thức bí mật
-            return "M" + code.toString().padStart(4, '0');        // Thêm chữ M và đủ 4 số
+            // Cập nhật mới: Đọc trực tiếp mã 8 ký tự bí mật do Bot truyền sang qua URL
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('v') || "LỖI MÃ";
+
+            // CODE CŨ GIỮ NGUYÊN (Đã được comment để tắt chế độ tính toán theo phút)
+            // const currentMinute = Math.floor(Date.now() / 60000); // Lấy số phút hiện tại
+            // let code = ((currentMinute + 88) * 168) % 10000;      // Áp dụng công thức bí mật
+            // return "M" + code.toString().padStart(4, '0');        // Thêm chữ M và đủ 4 số
         }
 
         // HÀM HIỆN MÃ KHI BẤM NÚT (ĐÃ FIX: CHỈ HIỆN 1 LẦN, KHÔNG TỰ ĐỘNG LÀM MỚI)
