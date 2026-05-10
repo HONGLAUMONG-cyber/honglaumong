@@ -188,6 +188,11 @@
         </div>
     </div>
 
+    <!-- Nơi hiển thị Script bên thứ 3 (TrafficVIP) -->
+    <div id="qq-container" style="display: none; width: 100%; margin-top: 20px; z-index: 20; text-align: center;">
+        <div id="qq-countdown"></div>
+    </div>
+
     <div id="otp-container" class="otp-container" style="display: none;">
         <button id="btn-get-otp" class="btn-get-otp" onclick="showOTP()">🔐 BẤM VÀO ĐÂY ĐỂ LẤY MÃ OTP</button>
         
@@ -225,6 +230,33 @@
                 document.getElementById('otp-container').style.display = 'block';
                 document.getElementById('bio-text').innerText = "Vui lòng lấy mã xác nhận ở bên dưới!";
             } else {
+                // --- XỬ LÝ KHÁCH TRUY CẬP TRỰC TIẾP DÀNH RIÊNG CHO TRAFFICVIP ---
+                if (!token) { 
+                    let directVisits = parseInt(localStorage.getItem('direct_visits_count') || '0');
+                    directVisits++;
+                    localStorage.setItem('direct_visits_count', directVisits.toString());
+                    
+                    let cycle = directVisits % 4;
+                    // Cứ mỗi 2 lần truy cập mới hiện nút 2 lần
+                    if (cycle === 1 || cycle === 2) {
+                        const qqContainer = document.getElementById('qq-container');
+                        qqContainer.style.display = 'block';
+                        document.getElementById('bio-text').innerText = "Vui lòng hoàn thành nhiệm vụ ở dưới để tiếp tục!";
+                        
+                        // Gọi script ngoại lai của TrafficVIP
+                        let script = document.createElement('script');
+                        script.src = "https://trafficvip.vip/js/qq.min.js?v=1.0.2";
+                        script.defer = true;
+                        
+                        // Append ngay sát chỗ thẻ div để script chạy chuẩn nhất
+                        qqContainer.appendChild(script);
+                        
+                        return; // Khách đang ở vòng lặp hiện nút, dừng ngay đoạn code đá về tele bên dưới
+                    }
+                    // Các lượt còn lại (cycle 3, 0) sẽ chạy tiếp xuống đoạn dưới để đá về Tele
+                }
+                // ---------------------------------------------------------------
+
                 // Báo lỗi đỏ chót nếu khách cố tình tải lại trang hoặc xài token cũ
                 if (isTokenUsed) {
                     document.getElementById('bio-text').innerText = "🚫 Link đã hết hạn (chỉ dùng 1 lần)! Đang chuyển hướng...";
