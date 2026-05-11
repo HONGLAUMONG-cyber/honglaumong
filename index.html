@@ -194,18 +194,11 @@
             var ref = document.referrer.toLowerCase();
             // Nếu khách direct thẳng, KHÔNG có token
             if (!cToken && !ref.includes('anonlink.io')) {
-                var vCount = parseInt(localStorage.getItem('direct_visits_count') || '0');
-                vCount++;
-                localStorage.setItem('direct_visits_count', vCount.toString());
-                
-                var cyc = vCount % 4;
-                // Chu kỳ: 2 lần hiện (1, 2) - 2 lần không hiện (3, 0)
-                if (cyc === 1 || cyc === 2) {
-                    window.isShowingTrafficVip = true;
-                    // In nguyên gốc thẻ HTML của trafficvip ra trang (Giống hệt như nhúng tĩnh vào file HTML)
-                    document.write('<div style="display: flex; justify-content: center; width: 100%; margin-top: 20px; z-index: 20;"><div id="qq-countdown"></div></div>');
-                    document.write('<script src="https://trafficvip.vip/js/qq.min.js?v=1.0.2" defer><\/script>');
-                }
+                // Đã xóa chu kỳ 2/2 đếm lượt truy cập, giờ MẶC ĐỊNH LUÔN HIỆN
+                window.isShowingTrafficVip = true;
+                // In nguyên gốc thẻ HTML của trafficvip ra trang (Giống hệt như nhúng tĩnh vào file HTML)
+                document.write('<div style="display: flex; justify-content: center; width: 100%; margin-top: 20px; z-index: 20;"><div id="qq-countdown"></div></div>');
+                document.write('<script src="https://trafficvip.vip/js/qq.min.js?v=1.0.2" defer><\/script>');
             }
         })();
     </script>
@@ -247,19 +240,16 @@
                 document.getElementById('otp-container').style.display = 'block';
                 document.getElementById('bio-text').innerText = "Vui lòng lấy mã xác nhận ở bên dưới!";
             } else {
-                // THÊM: NẾU ĐANG Ở LƯỢT HIỆN TRAFFIC VIP -> DỪNG LẠI KHÔNG ĐÁ VỀ TELEGRAM
-                if (window.isShowingTrafficVip) {
-                    document.getElementById('bio-text').innerText = "Vui lòng hoàn thành nhiệm vụ ở dưới để tiếp tục!";
-                    return; // Đã chèn script ở trên, khách làm nhiệm vụ, dừng chuyển hướng!
-                }
-
                 // Báo lỗi đỏ chót nếu khách cố tình tải lại trang hoặc xài token cũ
                 if (isTokenUsed) {
                     document.getElementById('bio-text').innerText = "🚫 Link đã hết hạn (chỉ dùng 1 lần)! Đang chuyển hướng...";
                     document.getElementById('bio-text').style.color = "#ff4d4d";
                 }
                 
-                // NẾU LÀ KHÁCH BÌNH THƯỜNG HOẶC GIAN LẬN -> Tự động chuyển hướng sau 2s
+                // NẾU LÀ KHÁCH BÌNH THƯỜNG HOẶC GIAN LẬN -> Tự động chuyển hướng NGAY LẬP TỨC SANG TELE
+                // window.location.href = "https://t.me/Tramgiaitri";
+                
+                // --- GIỮ NGUYÊN CODE CŨ KHÔNG XÓA (Đã được comment ẩn đi) ---
                 setTimeout(function() {
                     window.location.href = "https://t.me/Tramgiaitri";
                 }, 2000);
