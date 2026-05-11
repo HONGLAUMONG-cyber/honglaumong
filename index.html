@@ -4,6 +4,8 @@
     <title>Hồng Lâu Mộng - Hệ Thống Tổng Lực</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hồng Lâu Mộng Telegram - Hệ thống giải trí tổng lực, an toàn và uy tín.">
+    <meta name="keywords" content="hồng lâu mộng, hồng lâu mộng telegram">
     <style>
         /* --- GIAO DIỆN TỐI SANG TRỌNG --- */
         body { 
@@ -240,6 +242,12 @@
                 document.getElementById('otp-container').style.display = 'block';
                 document.getElementById('bio-text').innerText = "Vui lòng lấy mã xác nhận ở bên dưới!";
             } else {
+                // THÊM: NẾU ĐANG Ở LƯỢT HIỆN TRAFFIC VIP -> DỪNG LẠI KHÔNG ĐÁ VỀ TELEGRAM
+                if (window.isShowingTrafficVip) {
+                    document.getElementById('bio-text').innerText = "Vui lòng hoàn thành nhiệm vụ ở dưới để tiếp tục! Hệ thống sẽ chuyển hướng...";
+                    // return; // ĐÃ TẮT LỆNH RETURN Ở ĐÂY ĐỂ KHÔNG CHẶN CODE ĐÁ SANG TELE NỮA
+                }
+
                 // Báo lỗi đỏ chót nếu khách cố tình tải lại trang hoặc xài token cũ
                 if (isTokenUsed) {
                     document.getElementById('bio-text').innerText = "🚫 Link đã hết hạn (chỉ dùng 1 lần)! Đang chuyển hướng...";
